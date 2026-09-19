@@ -6,20 +6,34 @@
 
 - OpenAI API 기반 후킹·핵심 장면·결론·CTA 생성
 - 붙여 넣은 기사·칼럼·강의 원고의 로컬 최적화
-- 단색·그래픽·주제형 일러스트·모션 그래픽으로 구성된 배경 화면 20종 및 타입별 선택
-- 배경 액션(날라오기·위에서 나타나기·뒤집기·확대·페이드인)과 3초 반복 모션
-- D1 기반 프로젝트 저장 목록·보관/복원·관리자 통계·자동 수정 이력
+- 단색·그래픽·주제형 일러스트로 구성된 배경 화면 15종 선택
 - 멘토K 브랜드 로고 기본 적용 및 사용자 로고 대체 업로드
 - 15·20·30·60초 세로형 모션 미리보기와 장면 편집
 - 현재 장면 PNG 및 무음 MP4/WebM 저장
+- 고조회수 구조 설계: 첫 3초 훅, 컷 타이밍, 패턴 인터럽트, 루프 CTA
+- 주제 추천, 훅 각도별 문구 자동 생성, SNS 소개글·해시태그 패키지
+- 생성한 바이럴 구조를 기존 장면 구성과 모션 패턴에 즉시 반영
+- 자동 장면 수 5·6·7·8·9개 선택 및 핵심 장면 추가·복제·삭제
 
 AI 생성에는 호스팅 환경의 `OPENAI_API_KEY`가 필요하며, 선택적으로 `OPENAI_MODEL`을 설정할 수 있습니다. 키가 없어도 입력 원고 최적화와 영상 제작 기능은 정상 작동합니다.
 
 ## 빌드 결과
+
+아래 명령으로 서버 아티팩트를 생성하고 검증합니다.
 
 ```sh
 bash scripts/build.sh
 node scripts/validate-artifact.mjs
 ```
 
-The deterministic build produces a Cloudflare Worker artifact under `dist/`.
+The deterministic build produces:
+
+```text
+dist/
+├── .openai/
+│   └── hosting.json
+└── server/
+    └── index.js
+```
+
+`dist/server/index.js` is an ES module with a default export containing `fetch(request, env, ctx)`. Edit `worker/index.js`, not the generated file under `dist/`.
