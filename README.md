@@ -37,3 +37,9 @@ dist/
 ```
 
 `dist/server/index.js` is an ES module with a default export containing `fetch(request, env, ctx)`. Edit `worker/index.js`, not the generated file under `dist/`.
+
+## Vercel 배포
+
+`api/index.js`가 기존 Worker 요청을 Vercel Node.js Function으로 연결하고,
+`vercel.json`이 모든 경로를 해당 Function으로 전달합니다. GitHub 저장소를
+Vercel 프로젝트에 연결하면 `main` 브랜치가 프로덕션으로 자동 배포됩니다.
